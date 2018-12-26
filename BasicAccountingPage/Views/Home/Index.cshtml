@@ -1,0 +1,176 @@
+﻿@model BasicAccountingPage.Models.IncomeCostMultiModel
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="row">
+    <div class="col-md-6">
+        @using (Html.BeginForm("AddIncome", "Home", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+        {
+            @Html.AntiForgeryToken()
+            <h4>Add new Income Record.</h4>
+            <hr />
+            @Html.ValidationSummary("", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(m => m.income.Amount, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(m => m.income.Amount, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.income.Description, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(m => m.income.Description, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.income.Type, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(m => m.income.Type, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" class="btn btn-default" value="Add" />
+                </div>
+            </div>
+        }
+    </div>
+    <div class="col-md-6">
+        @using (Html.BeginForm("AddCost", "Home", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+        {
+            @Html.AntiForgeryToken()
+            <h4>Add new Cost Record.</h4>
+            <hr />
+            @Html.ValidationSummary("", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(m => m.cost.Amount, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(m => m.cost.Amount, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.cost.Description, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(m => m.cost.Description, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.cost.Type, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(m => m.cost.Type, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" class="btn btn-default" value="Add" />
+                </div>
+            </div>
+        }
+    </div>
+    <img src="@Url.Action("Chart")" alt="chart"/>
+    
+</div>
+
+<div class="body" id="start-list">
+    <h4>Income List</h4>
+    <hr />
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
+            <thead>
+                <tr>
+                    <th>Amount</th>
+                    <th>Description</th>
+                    <th>Type</th>
+                    
+                </tr>
+            </thead>
+
+            <tbody id="start-list-tbody">
+                @foreach (var item in Model.incomeList)
+                {
+                    <tr>
+
+                        <td>
+                            @item.Amount
+                        </td>
+                        <td>
+                            @item.Description
+                        </td>
+                        <td>
+                            @item.Type
+                        </td>
+                        
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="body" id="cost-list">
+    <h4>Cost List</h4>
+    <hr />
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
+            <thead>
+                <tr>
+                    <th>Amount</th>
+                    <th>Description</th>
+                    <th>Type</th>
+                    
+                </tr>
+            </thead>
+
+            <tbody id="cost-list-tbody">
+                @foreach (var item in Model.costList)
+                {
+                    <tr>
+                        <td>
+                            @item.Amount
+                        </td>
+                        <td>
+                            @item.Description
+                        </td>
+                        <td>
+                            @item.Type
+                        </td>
+                        
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="body" id="balance">
+    <h4>Balance</h4>
+    <hr />
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
+            <thead>
+                <tr>
+                    <th>Total Income</th>
+                    <th>Total Cost</th>
+                    <th>Balance</th>
+                </tr>
+            </thead>
+
+            <tbody id="balance-tbody">
+                @foreach (var item in Model.balance)
+                {
+                    <tr>
+                        <td>
+                            @item.TotalIncome
+                        </td>
+                        <td>
+                            @item.TotalCost
+                        </td>
+                        <td>
+                            @item.CurrentBalance
+                        </td>
+                        
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
